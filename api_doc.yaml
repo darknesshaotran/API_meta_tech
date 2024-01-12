@@ -1,0 +1,1176 @@
+openapi: 3.0.3
+info:
+    title: meta_tech
+    version: 1.0.0
+    contact: {}
+    description: |-
+        - api for shop. 
+        - (admin account: email = admin@gmail.com, password = 123aaaaa)
+servers:
+    - url: 'http://localhost:4000'
+paths:
+    /api/user/forgot-password:
+        post:
+            tags:
+                - Forgot password API
+            summary: forgot password
+            description: send a link(include forgot password token) into user's email
+            operationId: forgotPassword
+            requestBody:
+                content:
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                    example: darknessclmm@gmail.com
+                        examples:
+                            forgot password:
+                                value:
+                                    email: darknessclmm@gmail.com
+            responses:
+                '200':
+                    description: ''
+    /api/user/verify-forgot-password:
+        post:
+            tags:
+                - Forgot password API
+            summary: verify forgotpassword token
+            description: verify forgotpassword token when click on the link sent on email
+            operationId: verifyForgotpasswordToken
+            requestBody:
+                content:
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            properties:
+                                '':
+                                    type: string
+                                    example: >-
+                                        note: sau mà dùng api này thì tạo 1 trang
+                                        http://localhost:3000/verify_forgot_password_token?forgot_password_token=eyJhbGciOiJIUzI1......
+                                        để verify
+                                forgot_password_token:
+                                    type: string
+                                    example: >-
+                                        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTY5NzA5NDc0OSwiZXhwIjoxNjk3MjY3NTQ5fQ.rhS6dpv3sn3we5twtIADCwjMyCl1QcRdVDyiKjnIHu4
+                        examples:
+                            verify forgotpassword token:
+                                value:
+                                    '': >-
+                                        note: sau mà dùng api này thì tạo 1 trang
+                                        http://localhost:3000/verify_forgot_password_token?forgot_password_token=eyJhbGciOiJIUzI1......
+                                        để verify
+                                    forgot_password_token: >-
+                                        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTY5NzA5NDc0OSwiZXhwIjoxNjk3MjY3NTQ5fQ.rhS6dpv3sn3we5twtIADCwjMyCl1QcRdVDyiKjnIHu4
+            responses:
+                '200':
+                    description: ''
+    /api/user/reset-password:
+        post:
+            tags:
+                - Forgot password API
+            summary: reset password
+            description: reset password sau khi verify forgot password token thành công
+            operationId: resetPassword
+            requestBody:
+                content:
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            properties:
+                                confirm_password:
+                                    type: string
+                                    example: 123aaaaa
+                                email:
+                                    type: string
+                                    example: darknessclmm@gmail.com
+                                forgot_password_token:
+                                    type: string
+                                    example: >-
+                                        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjIsInR5cGUiOiJmb3Jnb3RQYXNzd29yZFRva2VuIiwiaWF0IjoxNjk3MDM4NzQ4LCJleHAiOjE2OTcyMTE1NDh9.SJaeS5DoXJE-fOtEn9y5vy1vNz9dq6jI1fkaOgpvsKw
+                                password:
+                                    type: string
+                                    example: 123aaaaa
+                        examples:
+                            reset password:
+                                value:
+                                    confirm_password: 123aaaaa
+                                    email: darknessclmm@gmail.com
+                                    forgot_password_token: >-
+                                        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjIsInR5cGUiOiJmb3Jnb3RQYXNzd29yZFRva2VuIiwiaWF0IjoxNjk3MDM4NzQ4LCJleHAiOjE2OTcyMTE1NDh9.SJaeS5DoXJE-fOtEn9y5vy1vNz9dq6jI1fkaOgpvsKw
+                                    password: 123aaaaa
+            responses:
+                '200':
+                    description: ''
+    /api/user/login/:
+        post:
+            tags:
+                - Account
+            summary: login
+            description: login
+            operationId: login
+            requestBody:
+                content:
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                    example: darknessclmm@gmail.com
+                                password:
+                                    type: string
+                                    example: 123aaaaa
+                        examples:
+                            login:
+                                value:
+                                    email: darknessclmm@gmail.com
+                                    password: 123aaaaa
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/user/register:
+        post:
+            tags:
+                - Account
+            summary: register
+            description: register
+            operationId: register
+            requestBody:
+                content:
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            properties:
+                                confirm_password:
+                                    type: string
+                                    example: 123aaaaa
+                                email:
+                                    type: string
+                                    example: darknessclmm1@gmail.com
+                                firstname:
+                                    type: string
+                                    example: trần
+                                lastname:
+                                    type: string
+                                    example: hào thanh hưng
+                                password:
+                                    type: string
+                                    example: 123aaaaa
+                                phoneNumber:
+                                    type: string
+                                    example: '3111111111'
+                        examples:
+                            register:
+                                value:
+                                    confirm_password: 123aaaaa
+                                    email: darknessclmm1@gmail.com
+                                    firstname: trần
+                                    lastname: hào thanh hưng
+                                    password: 123aaaaa
+                                    phoneNumber: '3111111111'
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/user/refreshToken:
+        post:
+            tags:
+                - Account
+            summary: refresh token
+            description: refresh token dùng mỗi khi access token hết hạn
+            operationId: refreshToken
+            requestBody:
+                content:
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            properties:
+                                refreshToken:
+                                    type: string
+                                    example: >-
+                                        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTY5NzA5NDc0OSwiZXhwIjoxNjk3MjY3NTQ5fQ.rhS6dpv3sn3we5twtIADCwjMyCl1QcRdVDyiKjnIHu4
+                        examples:
+                            refresh token:
+                                value:
+                                    refreshToken: >-
+                                        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTY5NzA5NDc0OSwiZXhwIjoxNjk3MjY3NTQ5fQ.rhS6dpv3sn3we5twtIADCwjMyCl1QcRdVDyiKjnIHu4
+            responses:
+                '200':
+                    description: ''
+    /api/user/change-password:
+        post:
+            tags:
+                - Account
+            summary: change Password
+            description: change Password
+            operationId: changePassword
+            requestBody:
+                content:
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            properties:
+                                confirm_password:
+                                    type: string
+                                    example: TranAnhHao1
+                                password:
+                                    type: string
+                                    example: TranAnhHao1
+                        examples:
+                            change Password:
+                                value:
+                                    confirm_password: TranAnhHao1
+                                    password: TranAnhHao1
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/user/profile/me:
+        get:
+            tags:
+                - Account
+            summary: get my profile
+            description: get my profile
+            operationId: getMyProfile
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/user/updateProfile:
+        put:
+            tags:
+                - Account
+            summary: update profile
+            description: update profile
+            operationId: updateProfile
+            requestBody:
+                content:
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            properties:
+                                firstname:
+                                    type: string
+                                    example: Hưng
+                                lastname:
+                                    type: string
+                                    example: Thanh
+                                phoneNumber:
+                                    type: string
+                                    example: '0962240446'
+                        examples:
+                            update profile:
+                                value:
+                                    firstname: Hưng
+                                    lastname: Thanh
+                                    phoneNumber: '0962240446'
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/user/profile/{userID}:
+        get:
+            tags:
+                - Account
+            summary: get someone's profile
+            description: get someone's profile
+            operationId: getSomeoneSProfile
+            parameters:
+                - name: userID
+                  example: 7
+                  in: path
+                  description: id of user
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/user/update-avatar:
+        put:
+            tags:
+                - Account
+            summary: update avatar
+            description: update user's avatar
+            operationId: updateAvatar
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                image:
+                                    type: string
+                                    format: binary
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/item:
+        get:
+            tags:
+                - Item
+            summary: get list item
+            description: get list item in shop
+            operationId: getListItem
+            parameters:
+                - name: minPrice
+                  in: query
+                  schema:
+                      type: string
+                      example: '11000'
+                - name: maxPrice
+                  in: query
+                  schema:
+                      type: string
+                      example: '11000'
+                - name: category
+                  in: query
+                  schema:
+                      type: string
+                      example: '9'
+                - name: limit
+                  in: query
+                  schema:
+                      type: string
+                      example: '1'
+                - name: page
+                  in: query
+                  schema:
+                      type: string
+                      example: '1'
+                - name: search
+                  in: query
+                  schema:
+                      type: string
+                      example: a
+                - name: isDesc
+                  in: query
+                  schema:
+                      type: string
+                      example: '1'
+
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/item/{id_item}:
+        get:
+            tags:
+                - Item
+            summary: get item detail
+            description: get item detail
+            operationId: getItemDetail
+            parameters:
+                - name: id_item
+                  example: 1451
+                  in: path
+                  description: id of item
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                '200':
+                    description: ''
+    /api/revenue/product:
+        get:
+            tags:
+                - Revenue
+                - Item
+            summary: top 20 best seller
+            description: top 20 best seller product
+            operationId: top20BestSeller
+            parameters:
+                - name: startDate
+                  in: query
+                  schema:
+                      type: string
+                      example: '2023-10-30 00:00:00'
+                - name: endDate
+                  in: query
+                  schema:
+                      type: string
+                      example: '2024-10-01 08:31:28'
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/item/add_color/{id_item}:
+        post:
+            tags:
+                - Item
+            summary: add color item
+            description: add color item
+            operationId: addItemSSize
+            parameters:
+                - name: id_item
+                  example: 1451
+                  in: path
+                  description: id of item
+                  required: true
+                  schema:
+                      type: integer
+            requestBody:
+                content:
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            properties:
+                                amount:
+                                    type: string
+                                    example: '50'
+                                color:
+                                    type: string
+                                    example: red
+                        examples:
+                            add item's size:
+                                value:
+                                    amount: '50'
+                                    color: red
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/item/add:
+        post:
+            tags:
+                - Item
+            summary: add item
+            description: add item
+            operationId: addItem
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                description:
+                                    type: string
+                                    example: >-
+                                        Time to elevate your T-shirt collection? This tee answers
+                                        the call. Heavyweight cotton and a clean, embroidered Futura
+                                        logo keep it simple for pairing up with any outfit. The
+                                        oversize fit gives you plenty of extra space for casual
+                                        style and easy layering.
+                                id_category:
+                                    type: string
+                                    example: '9'
+                                image:
+                                    type: string
+                                    format: binary
+                                import_price:
+                                    type: string
+                                    example: '60000'
+                                name:
+                                    type: string
+                                    example: 'Mũ len classic '
+                                price:
+                                    type: string
+                                    example: '89000'
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/item/updateImages/{id_item}:
+        put:
+            tags:
+                - Item
+            summary: update item's image
+            description: update item's image
+            operationId: updateItemSImage
+            parameters:
+                - name: id_item
+                  example: 1451
+                  in: path
+                  description: id of item
+                  required: true
+                  schema:
+                      type: integer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                image:
+                                    type: string
+                                    format: binary
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/item/updateInfor/{id_item}:
+        put:
+            tags:
+                - Item
+            summary: update item's infor
+            description: update item's infor
+            operationId: updateItemSInfor
+            parameters:
+                - name: id_item
+                  example: 1451
+                  in: path
+                  description: id of item
+                  required: true
+                  schema:
+                      type: integer
+            requestBody:
+                content:
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            properties:
+                                id_category:
+                                    type: string
+                                    example: '1'
+                                name:
+                                    type: string
+                                    example: Nike Sportswear shirt
+                        examples:
+                            update item's infor:
+                                value:
+                                    id_category: '1'
+                                    name: Nike Sportswear shirt
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/item/delete/{id_item}:
+        delete:
+            tags:
+                - Item
+            summary: delete item
+            description: delete item
+            operationId: deleteItem
+            parameters:
+                - name: id_item
+                  example: 1451
+                  in: path
+                  description: id of item
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                '200':
+                    description: ''
+    /api/cart/add:
+        post:
+            tags:
+                - Cart
+            summary: add to cart
+            description: add color item to cart
+            operationId: addToCart
+            requestBody:
+                content:
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            properties:
+                                id_color_item:
+                                    type: string
+                                    example: '7133'
+                                quantity:
+                                    type: string
+                                    example: '2'
+                        examples:
+                            add to cart:
+                                value:
+                                    id_color_item: '7133'
+                                    quantity: '2'
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/cart/details:
+        get:
+            tags:
+                - Cart
+            summary: get cart detail
+            description: get cart detail
+            operationId: getCartDetail
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/cart/updateQuantity/{id_cartItem}:
+        put:
+            tags:
+                - Cart
+            summary: update quantity cartItem
+            description: update quantity cart's Item
+            operationId: updateQuantityCartitem
+            parameters:
+                - name: id_cartItem
+                  example: 23
+                  in: path
+                  description: id of cart's item
+                  required: true
+                  schema:
+                      type: integer
+            requestBody:
+                content:
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            properties:
+                                quantity:
+                                    type: string
+                                    example: '3'
+                        examples:
+                            update quantity cartItem:
+                                value:
+                                    quantity: '3'
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/cart/delete/{id_cartItem}:
+        delete:
+            tags:
+                - Cart
+            summary: delete cart item
+            description: delete cart's item
+            operationId: deleteCartItem
+            parameters:
+                - name: id_cartItem
+                  example: 23
+                  in: path
+                  description: id of cart's item
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/category/:
+        get:
+            tags:
+                - Category
+            summary: get list category
+            description: get list category
+            operationId: getListCategory
+            responses:
+                '200':
+                    description: ''
+    /api/category/delete/{id_category}:
+        delete:
+            tags:
+                - Category
+            summary: delete category
+            description: delete category
+            operationId: deleteCategory
+            parameters:
+                - name: id_category
+                  example: 14
+                  in: path
+                  description: id of category
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/category/add:
+        post:
+            tags:
+                - Category
+            summary: add category
+            description: add category
+            operationId: addCategory
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                image:
+                                    type: string
+                                    format: binary
+                                name:
+                                    type: string
+                                    example: Shoes
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/order/create:
+        post:
+            tags:
+                - Order For Custommer
+            summary: create order in cart
+            description: create order in cart
+            operationId: createOrderInCart
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                address:
+                                    type: string
+                                    example: Xuan Thieu 14 street
+                                cartItems:
+                                    type: array
+                                    items:
+                                        type: object
+                                        properties:
+                                            id_cartItem:
+                                                type: number
+                                                example: 16
+                                            id_color_item:
+                                                type: number
+                                                example: 7133
+                                            price:
+                                                type: number
+                                                example: 349000
+                                            quantity:
+                                                type: number
+                                                example: 2
+                                    example:
+                                        - id_cartItem: 16
+                                          id_color_item: 7133
+                                          price: 349000
+                                          quantity: 2
+                                phoneNumber:
+                                    type: string
+                                    example: '0962240446'
+                        examples:
+                            create order in cart:
+                                value:
+                                    address: Xuan Thieu 14 street
+                                    cartItems:
+                                        - id_cartItem: 16
+                                          id_color_item: 7133
+                                          price: 349000
+                                          quantity: 2
+                                    phoneNumber: '0962240446'
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/order/createOneItem:
+        post:
+            tags:
+                - Order For Custommer
+            summary: create 1-item's order
+            description: create 1-item's order
+            operationId: create1ItemSOrder
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                Item:
+                                    type: object
+                                    properties:
+                                        id_color_item:
+                                            type: number
+                                            example: 7159
+                                        price:
+                                            type: number
+                                            example: 1549000
+                                        quantity:
+                                            type: number
+                                            example: 1
+                                address:
+                                    type: string
+                                    example: nguyễn trãi street
+                                phoneNumber:
+                                    type: string
+                                    example: '09622404411'
+                        examples:
+                            create 1-item's order:
+                                value:
+                                    Item:
+                                        id_color_item: 7159
+                                        price: 1549000
+                                        quantity: 1
+                                    address: nguyễn trãi street
+                                    phoneNumber: '09622404411'
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/order/{id_order}:
+        get:
+            tags:
+                - Order For Custommer
+                - Order For Admin
+            summary: get order detail
+            description: get order detail
+            operationId: getOrderDetail
+            parameters:
+                - name: id_order
+                  example: 23
+                  in: path
+                  description: id of order
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/order/history:
+        get:
+            tags:
+                - Order For Custommer
+            summary: get order's history
+            description: get order's history
+            operationId: getOrderSHistory
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/order/status/1:
+        get:
+            tags:
+                - Order For Custommer
+            summary: get my pending order
+            description: get my pending order
+            operationId: getMyPendingOrder
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/order/status/2:
+        get:
+            tags:
+                - Order For Custommer
+            summary: get my preparing order
+            description: get my preparing order
+            operationId: getMyPreparingOrder
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/order/status/3:
+        get:
+            tags:
+                - Order For Custommer
+            summary: get my delivering order
+            description: get my delivering order
+            operationId: getMyDeliveringOrder
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/order/status/4:
+        get:
+            tags:
+                - Order For Custommer
+            summary: get my sucess order
+            description: get my sucess order
+            operationId: getMySucessOrder
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/order/status/5:
+        get:
+            tags:
+                - Order For Custommer
+            summary: get my canceled order
+            description: get my canceled order
+            operationId: getMyCanceledOrder
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/order/cancel/{id_order}:
+        put:
+            tags:
+                - Order For Custommer
+            summary: cancel order
+            description: cancel order
+            operationId: cancelOrder
+            parameters:
+                - name: id_order
+                  example: 23
+                  in: path
+                  description: id of order
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+
+    /api/order/All/status/1:
+        get:
+            tags:
+                - Order For Admin
+            summary: get all peding order
+            description: get all peding order
+            operationId: getAllPedingOrder
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/order/All/status/2:
+        get:
+            tags:
+                - Order For Admin
+            summary: get all preparing order
+            description: get all preparing order
+            operationId: getAllPreparingOrder
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/order/All/status/3:
+        get:
+            tags:
+                - Order For Admin
+            summary: get all delivering order
+            description: get all delivering order
+            operationId: getAllDeliveringOrder
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/order/All/status/4:
+        get:
+            tags:
+                - Order For Admin
+            summary: get all success order
+            description: get all success order
+            operationId: getAllSuccessOrder
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/order/All/status/5:
+        get:
+            tags:
+                - Order For Admin
+            summary: get all canceled order
+            description: get all canceled order
+            operationId: getAllCanceledOrder
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/order/updateStatus/{id_order}:
+        put:
+            tags:
+                - Order For Admin
+            summary: update order's Status
+            description: update order's Status
+            operationId: updateOrderSStatus
+            parameters:
+                - name: id_order
+                  example: 23
+                  in: path
+                  description: id of order
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/rating/add:
+        post:
+            tags:
+                - Rating
+            summary: add rating
+            description: add rating
+            operationId: addRating
+            requestBody:
+                content:
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            properties:
+                                comment:
+                                    type: string
+                                    example: >-
+                                        good product for user !! but the delivering service is quite
+                                        bad :)
+                                id_item:
+                                    type: string
+                                    example: '1438'
+                                id_order_item:
+                                    type: string
+                                    example: '22'
+                                star:
+                                    type: string
+                                    example: '4'
+                        examples:
+                            add rating:
+                                value:
+                                    comment: >-
+                                        good product for user !! but the delivering service is quite
+                                        bad :)
+                                    id_item: '1438'
+                                    id_order_item: '22'
+                                    star: '4'
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/rating/delete/{id_rating}:
+        delete:
+            tags:
+                - Rating
+            summary: delete rating
+            description: delete rating
+            operationId: deleteRating
+            parameters:
+                - name: id_rating
+                  example: 23
+                  in: path
+                  description: id of rating
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/rating/update/{id_rating}:
+        put:
+            tags:
+                - Rating
+            summary: update rating
+            description: update rating
+            operationId: updateRating
+            parameters:
+                - name: id_rating
+                  example: 23
+                  in: path
+                  description: id of rating
+                  required: true
+                  schema:
+                      type: integer
+            requestBody:
+                content:
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            properties:
+                                comment:
+                                    type: string
+                                    example: rất xinh đẹp
+                                star:
+                                    type: string
+                                    example: '4'
+                        examples:
+                            update rating:
+                                value:
+                                    comment: rất xinh đẹp
+                                    star: '4'
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/revenue/:
+        get:
+            tags:
+                - Revenue
+            summary: revenue by time
+            description: revenue with time (revenue and profit)
+            operationId: revenueWithTime
+            parameters:
+                - name: startDate
+                  in: query
+                  schema:
+                      type: string
+                      example: '2023-10-27 00:00:00'
+                - name: endDate
+                  in: query
+                  schema:
+                      type: string
+                      example: '2024-12-30 08:31:28'
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+    /api/revenue/customer:
+        get:
+            tags:
+                - Revenue
+            summary: revenue with customer by time
+            description: revenue with customer by time
+            operationId: revenueWithCustomerByTime
+            parameters:
+                - name: startDate
+                  in: query
+                  schema:
+                      type: string
+                      example: '2023-10-27 00:00:00'
+                - name: endDate
+                  in: query
+                  schema:
+                      type: string
+                      example: '2024-11-20 08:31:28'
+
+            responses:
+                '200':
+                    description: ''
+            security:
+                - bearerAuth: []
+components:
+    securitySchemes:
+        bearerAuth:
+            type: http
+            scheme: bearer
+tags:
+    - name: Account
+    - name: Forgot password API
+    - name: Item
+    - name: Cart
+    - name: Category
+    - name: Order For Custommer
+    - name: Order For Admin
+    - name: Rating
+    - name: Revenue
